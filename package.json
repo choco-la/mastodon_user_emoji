@@ -1,0 +1,27 @@
+{
+  "name": "mastodon_user_emoji",
+  "version": "1.0.0",
+  "description": "display user icon image like friends.nico",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc; browserify js/main.js -o ./webext/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webext": "npm run build; npm run webext:package",
+    "webext:package": "cd webext/; zip -r addon.xpi icons/ index.js manifest.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/choco-la/mastodon_user_emoji.git"
+  },
+  "author": "choco-la",
+  "homepage": "https://github.com/choco-la/mastodon_user_emoji#readme",
+  "devDependencies": {
+    "browserify": "^16.2.3",
+    "tslint": "^5.14.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.4.1"
+  },
+  "dependencies": {
+    "@types/node": "^11.12.2"
+  }
+}
