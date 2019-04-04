@@ -19,12 +19,12 @@ const replaceUserEmoji = async (innerHTML: string, screenName: string): Promise<
   return replaceContent(innerHTML, iconHTMLStrings, screenName)
 }
 
-export const insertUserEmoji: (content: HTMLElement) => void = (content) => {
+export const insertUserEmoji: (content: HTMLElement) => void = async (content) => {
   const execCount = content.querySelectorAll('.h-card').length
 
   for (let i = 0; i < execCount; i++) {
     const match = userIconRegex.exec(content.innerText)
     if (!match) continue
-    replaceUserEmoji(content.innerHTML, match[1]).then((innerHTML) => content.innerHTML = innerHTML)
+    await replaceUserEmoji(content.innerHTML, match[1]).then((innerHTML) => content.innerHTML = innerHTML)
   }
 }
