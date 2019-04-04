@@ -14,7 +14,6 @@ const handleNodeList = (nodelist: NodeList) => {
   for (const node of nodelist) {
     const content = (node as HTMLElement).querySelector('p')
     if (content) {
-      console.debug('insertUserEmoji')
       insertUserEmoji(content)
     }
   }

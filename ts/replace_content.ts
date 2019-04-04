@@ -11,8 +11,6 @@ export const replaceContent = (originHTML: string, newHTML: string, screenName: 
   const pattern = `${prefix}${middle0}${middle1}${suffix}`
   const re = new RegExp(pattern, 'iu')
 
-  console.debug('parse')
   const dom = PARSER.parseFromString(originHTML, 'text/html')
-  console.debug(dom)
   return dom.body.innerHTML.replace(re, newHTML)
 }

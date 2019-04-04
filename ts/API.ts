@@ -40,11 +40,9 @@ const getAccountPage = (displayName: string): Promise<IFullfilledResponse> => {
 
 export const nameToID = async (screenName: string) => {
   const response = await getAccountPage(screenName)
-  console.debug(response.response)
   const responseHTML = PARSER.parseFromString(response.response, 'text/html')
   const links = responseHTML.querySelectorAll('link')
   for (const link of links) {
-    console.log(link.getAttribute('rel'))
     if (link.getAttribute('rel') === 'salmon') {
       const href = link.getAttribute('href')
       if (!href) throw new Error('ref is null or undefined')
