@@ -19,12 +19,27 @@ const replaceUserEmoji = async (innerHTML: string, screenName: string): Promise<
   return replaceContent(innerHTML, iconHTMLStrings, screenName)
 }
 
-export const insertUserEmoji: (content: HTMLElement) => void = async (content) => {
-  const execCount = content.querySelectorAll('.h-card').length
+const sliceWith = (text: string, length: number, separator: string): string => {
+  return text.split(separator).slice(1).join(separator)
+}
 
+const replaceContentParagraph = async (content: HTMLParagraphElement) => {
+  const execCount = content.querySelectorAll('.h-card').length
+  let html = content.innerHTML
+  let text = content.innerText
   for (let i = 0; i < execCount; i++) {
-    const match = userIconRegex.exec(content.innerText)
+    const match = userIconRegex.exec(text)
     if (!match) continue
-    await replaceUserEmoji(content.innerHTML, match[1]).then((innerHTML) => content.innerHTML = innerHTML)
+    const screenName = match[1]
+    html = await replaceUserEmoji(html, screenName)
+    text = sliceWith(text, 1, screenName)
+  }
+  return html
+}
+
+export const insertUserEmoji: (element: Element) => void = async (element) => {
+  const content = element.querySelector('p')
+  if (content) {
+    content.innerHTML = await replaceContentParagraph(content)
   }
 }

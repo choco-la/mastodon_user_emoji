@@ -10,10 +10,7 @@ const configure = {
 
 const handleNodeList = (nodelist: NodeList) => {
   for (const node of nodelist) {
-    const content = (node as HTMLElement).querySelector('p')
-    if (content) {
-      insertUserEmoji(content)
-    }
+    insertUserEmoji(node as Element)
   }
 }
 
