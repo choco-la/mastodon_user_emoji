@@ -20,7 +20,7 @@ const replaceUserEmoji = async (innerHTML: string, screenName: string): Promise<
 }
 
 const sliceWith = (text: string, length: number, separator: string): string => {
-  return text.split(separator).slice(1).join(separator)
+  return text.split(separator).slice(length).join(separator)
 }
 
 const replaceContentParagraph = async (content: HTMLParagraphElement) => {
