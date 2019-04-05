@@ -6,7 +6,7 @@ const ICON_STYLE: { height: string, width: string } = {
   width: '1.2em'
 }
 
-const userIconRegex = /:@([a-zA-Z0-9_]+):/
+const userIconRegex = /:@([a-zA-Z0-9_]+):/g
 const getUserIconURL = async (screenName: string): Promise<string> => {
   const accountNumber = await nameToID(screenName)
   const accounts = await getAccounts(accountNumber)
@@ -19,20 +19,13 @@ const replaceUserEmoji = async (innerHTML: string, screenName: string): Promise<
   return replaceContent(innerHTML, iconHTMLStrings, screenName)
 }
 
-const sliceWith = (text: string, length: number, separator: string): string => {
-  return text.split(separator).slice(length).join(separator)
-}
-
 const replaceContentParagraph = async (content: HTMLParagraphElement) => {
-  const execCount = content.querySelectorAll('.h-card').length
+  const matches = content.innerText.match(userIconRegex)
   let html = content.innerHTML
-  let text = content.innerText
-  for (let i = 0; i < execCount; i++) {
-    const match = userIconRegex.exec(text)
-    if (!match) continue
-    const screenName = match[1]
+  if (!matches) return html
+  for (const match of matches) {
+    const screenName = match.slice(2, -1)
     html = await replaceUserEmoji(html, screenName)
-    text = sliceWith(text, 1, screenName)
   }
   return html
 }
