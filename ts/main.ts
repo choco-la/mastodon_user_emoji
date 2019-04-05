@@ -1,7 +1,5 @@
 import { insertUserEmoji } from './insert_user_emoji'
 
-const LOCAL_TIMELINE = document.getElementsByClassName('item-list')[0]
-
 const onMutation: MutationCallback = (mutation) => {
   mutation.map((dom) => handleNodeList(dom.addedNodes))
 }
@@ -19,4 +17,7 @@ const handleNodeList = (nodelist: NodeList) => {
   }
 }
 
-observer.observe(LOCAL_TIMELINE, configure)
+const timelines = document.querySelectorAll('.item-list')
+for (const timeline of timelines) {
+  observer.observe(timeline, configure)
+}
